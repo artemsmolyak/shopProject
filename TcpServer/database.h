@@ -18,8 +18,12 @@ public:
 
     QSqlError connect();
     QSqlError createMainTable();
+    QSqlError createUsersTable();
     QVector <Product> getAll();
-    void createUser();
+    QSqlError createUser(QString login, QString password);
+    bool isUserExist(QString login, QString password);
+
+    QString getHash(QString str);
 };
 
 #endif // DATABASE_H

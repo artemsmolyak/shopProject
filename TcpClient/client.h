@@ -3,14 +3,6 @@
 
 #include <QObject>
 #include <QTcpSocket>
-enum Request
-{
-    getGoods,
-    newUser,
-    auth,
-    testPing
-};
-
 
 class Client : public QObject
 {

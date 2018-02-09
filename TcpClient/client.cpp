@@ -2,18 +2,16 @@
 #include <QDataStream>
 #include <QHostAddress>
 #include <../CommonFiles/product.h>
-
+#include <../CommonFiles/const.h>
 
 
 
 
 Client::Client()
 {
-    clientSocket =new QTcpSocket();
-    connect(clientSocket, SIGNAL(readyRead()), this, SLOT(readAnswerFromServer()));
+     clientSocket =new QTcpSocket();
+     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(readAnswerFromServer()));
      clientSocket->connectToHost(QHostAddress::LocalHost, 55555);
-
-
 
      qDebug() << "wait for connect....";
      clientSocket->waitForConnected();
@@ -24,13 +22,15 @@ Client::Client()
 
      QDataStream stream(&ba, QIODevice::ReadWrite);
 
-     qDebug() << "send goods" <<  getGoods;
-     stream<< getGoods;
+     qDebug() << "send newUser";
+     stream<< auth;
+
+     stream<< QString("login");
+     stream<< QString("pass");
+
 
      clientSocket->write(ba);
      clientSocket->flush();
-
-
 
 }
 
@@ -39,14 +39,12 @@ void Client::readAnswerFromServer()
     qDebug() << "we ahve answer";
     QByteArray ba =  clientSocket->readAll();
 
-
-
     QDataStream in(&ba, QIODevice::ReadOnly);
 
-   int answerCommand;
-   in >> answerCommand;
+     int answerCommand;
+      in >> answerCommand;
 
-   qDebug()<<"answer command" << answerCommand;
+     qDebug()<<"answer command" << answerCommand;
 
    switch (answerCommand) {
    case getGoods:
@@ -61,17 +59,33 @@ void Client::readAnswerFromServer()
 
    case newUser:
 
-       break;
+         qDebug() << "user is created";
+
+         break;
 
    case auth:
+         {
+           bool answer;
+           in >> answer;
 
-       break;
+           if (answer)
+               qDebug() << "user is exist";
+           else
+               qDebug() << "user is not exist";
 
+           break;
+         }
    case testPing:
 
        break;
 
-
+    case error:
+            {
+                 QString errorStr;
+                 in >> errorStr;
+                 qDebug() << "error" << errorStr;
+                 break;
+            }
 
    default:
        break;

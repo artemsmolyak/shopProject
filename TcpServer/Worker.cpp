@@ -4,6 +4,7 @@
 #include "QByteArray"
 #include "../CommonFiles/const.h"
 
+
 Worker::Worker(DataBase *db, int socketDescriptor,  QObject *parent) :  db(db), socketDescriptor(socketDescriptor) , QThread(parent)
 {
       qDebug() << "SocketThread::SocketThread";
@@ -63,22 +64,65 @@ void Worker::readyRead(){
                         QVector <Product> products = db->getAll();
 
                         qDebug() << "products size " << products.size();
-
                         streamAnswer << products;
-
                         break;
                 }
                 case newUser:
                 {
-                        streamAnswer << newUser;
+
                         qDebug() << "new user";
+
+                        QString login;
+                        stream >> login;
+
+                        QString password;
+                        stream >> password;
+
+
+                        if (login.isEmpty() || password.isEmpty()){
+                                streamAnswer << error;
+                                streamAnswer<<QString("wrong parameters");
+                                break;
+                        }
+
+                        if (db->isUserExist(login, password)){
+                                streamAnswer << error;
+                                streamAnswer<<QString("user is exist");
+                                break;
+                        }
+
+
+                        qDebug() <<"db";
+                        password = db->getHash(login+password);
+                        db->createUser(login, password);
+                        streamAnswer << newUser;
+
 
                         break;
                 }
                 case auth:
                 {
-                        streamAnswer << auth;
                         qDebug() << "auth";
+                        QString login;
+                        stream >> login;
+
+                        QString password;
+                        stream >> password;
+
+
+                        if (login.isEmpty() || password.isEmpty()){
+                                streamAnswer << error;
+                                streamAnswer<<QString("wrong parameters");
+                                break;
+                        }
+
+
+                        streamAnswer << auth;
+                       if (db->isUserExist(login, password))
+                                 streamAnswer << true;
+                       else
+                                 streamAnswer << false;
+
 
                         break;
                 }
@@ -91,7 +135,7 @@ void Worker::readyRead(){
 
                 default:
                         streamAnswer << error;
-
+                        streamAnswer <<QString("dont know such request");
                         break;
 
         }
