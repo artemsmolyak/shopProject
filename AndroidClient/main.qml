@@ -3,10 +3,20 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
 ApplicationWindow {
+     id: window
     visible: true
     width: 320
     height: 480
     title: qsTr("Hello World")
+
+    Drawer {
+            id: drawer
+            width: 0.7 * window.width
+            height: window.height
+
+        }
+
+
 
     SwipeView {
         id: swipeView
@@ -14,7 +24,13 @@ ApplicationWindow {
         currentIndex: tabBar.currentIndex
 
         Page1 {
+            Label {
+                text: qsTr("Main page")
+                anchors.centerIn: parent
+            }
+
         }
+
 
         Page {
             Label {
@@ -23,6 +39,8 @@ ApplicationWindow {
             }
         }
     }
+
+
 
     footer: TabBar {
         id: tabBar
@@ -34,4 +52,33 @@ ApplicationWindow {
             text: qsTr("Categories")
         }
     }
+
+
+
+
+
+    header:Rectangle {
+        width: 48
+        height: 48
+        color: "black"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                 menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
+                 drawer.visible = true
+            }
+        }
+
+        MenuBackIcon {
+          id: menuBackIcon
+          anchors.centerIn: parent
+        }
+      }
+
+//    SidePane{
+//        id : sidepanel
+//        visible: false
+//    }
+
 }
