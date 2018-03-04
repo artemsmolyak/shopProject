@@ -4,10 +4,44 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
      id: window
+     objectName: "window"
     visible: true
     width: 320
     height: 480
     title: qsTr("Hello World")
+
+
+//        StackView {
+//            id: stackView
+//            //initialItem: swipeView
+//            anchors.fill: parent
+//        }
+//        Page {
+//            Label {
+//                text: qsTr("Second page")
+//                anchors.centerIn: parent
+//            }
+
+
+//            Button{
+//                width: 100
+//                height: 20
+//                onClicked: {
+//                    console.log("press")
+//                    client.fillMainList()
+//                    stackView.push(Qt.resolvedUrl("Page3.qml"))
+//                }
+//            }
+//        }
+
+
+
+
+
+
+
+
+
 
     Drawer {
             id: drawer
@@ -17,6 +51,12 @@ ApplicationWindow {
         }
 
 
+    StackView {
+        id: stackView
+        //initialItem: swipeView
+        anchors.fill: parent
+    }
+
 
     SwipeView {
         id: swipeView
@@ -24,10 +64,12 @@ ApplicationWindow {
         currentIndex: tabBar.currentIndex
 
         Page1 {
+
             Label {
-                text: qsTr("Main page")
+                //text: qsTr("Main page")
                 anchors.centerIn: parent
             }
+
 
         }
 
@@ -37,7 +79,43 @@ ApplicationWindow {
                 text: qsTr("Second page")
                 anchors.centerIn: parent
             }
+
+
+            Button{
+                width: 100
+                height: 100
+                onClicked: {
+                    console.log("press")
+                    client.fillMainList()
+                    stackView.push(Qt.resolvedUrl("Page3.qml"))
+                }
+            }
+
+            ListView{
+                id : secondList
+                anchors.fill: parent
+                model: myModel
+                delegate: Text{
+                    width: 100
+                    height: 100
+                        text: modelData
+                    }
+                }
+
         }
+    }
+
+    ListModel {
+        id : secondListModel
+        ListElement {
+                name: "Apple"
+            }
+            ListElement {
+                name: "Orange"
+            }
+            ListElement {
+                name: "Banana"
+            }
     }
 
 
@@ -60,7 +138,7 @@ ApplicationWindow {
     header:Rectangle {
         width: 48
         height: 48
-        color: "black"
+        //color: "black"
 
         MouseArea {
             anchors.fill: parent

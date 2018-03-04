@@ -13,7 +13,7 @@ Worker::Worker(DataBase *db, int socketDescriptor,  QObject *parent) :  db(db), 
 Worker::~Worker()
 {
      qDebug() << "thread is ended";
-     clientSocket->deleteLater();
+     //clientSocket->deleteLater();
 }
 
 void Worker::run()
@@ -48,8 +48,10 @@ void Worker::readyRead(){
 
     QByteArray barrayOut;
     QDataStream streamAnswer(&barrayOut, QIODevice::ReadWrite);
+    streamAnswer << (quint32)0;
 
-    int command;
+    qint32 command;
+
 
     stream >> command;
 
@@ -59,12 +61,19 @@ void Worker::readyRead(){
         {
                 case getGoods:
                 {
-                        streamAnswer << getGoods;
-                        qDebug() << "getGoods";
+                        streamAnswer << (qint32)getGoods;
+                        qDebug() << "getGoods " <<  (qint32)getGoods;;
                         QVector <Product> products = db->getAll();
 
                         qDebug() << "products size " << products.size();
+
+                        if (products.size() > INT32_MAX){
+                            qDebug() << "the data is too big. can't be sending";
+                            break;
+                        }
+
                         streamAnswer << products;
+
                         break;
                 }
                 case newUser:
@@ -140,18 +149,23 @@ void Worker::readyRead(){
 
         }
 
+        streamAnswer.device()->seek(0);
+        streamAnswer << (qint32)(barrayOut.size() - sizeof(qint32));
+
+        qDebug() << "send block size " << (qint32)(barrayOut.size() - sizeof(qint32)) << barrayOut.size() ;
+
 
     clientSocket->write(barrayOut);
     clientSocket->flush();
 
-    clientSocket->disconnectFromHost();
-    clientSocket->waitForDisconnected();
+    //clientSocket->disconnectFromHost();
+    //clientSocket->waitForDisconnected();
 }
 
 
 void Worker::disconnected()
 {
-        qDebug() << "disconnected()";
+        qDebug() << "client disconnected()";
         clientSocket->deleteLater();
         exit(0);
 }

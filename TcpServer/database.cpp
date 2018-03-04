@@ -3,6 +3,9 @@
 #include <QtSql/QSqlQuery>
 #include "QCryptographicHash"
 
+#include "QImage"
+#include <QBuffer>
+
 DataBase::DataBase()
 {
         connect();
@@ -37,6 +40,25 @@ QSqlError DataBase::connect()
                qDebug() << "Database: connection ok";
            }
 
+
+
+        //
+//        QImage pic("/home/artem/Pictures/shop/2.png");
+//        QByteArray bArray;
+//        QBuffer buf(&bArray);
+//        buf.open(QIODevice::WriteOnly);
+//        pic.save(&buf, "png");
+
+
+//        QSqlQuery query;
+//        query.prepare(QLatin1String("UPDATE shop "
+//                                "SET pics = ?,    price = 700 WHERE id = 9  OR id = 14 "));
+
+//        query.addBindValue(bArray);
+
+//        qDebug() << "----------> save " <<  query.exec() <<query.lastError().text();
+
+ //pics = ? AND
 
 
         return QSqlError();
@@ -84,9 +106,14 @@ QVector<Product> DataBase::getAll()
     while (q.next()) {
            int id = q.value(0).toInt();
            QString name = q.value(1).toString();
-           int  price = q.value(3).toInt();
+           QByteArray bArrayPic = q.value(2).toByteArray();
 
-           Product product(id, name, price);
+//           QImage  pic;
+//           pic.loadFromData(bArrayPic);
+//           qDebug() << "image server "<< pic.width() << pic.height();
+
+           int  price = q.value(3).toInt();
+           Product product(id, name, bArrayPic, price);
            products.push_back(product);
     }
 

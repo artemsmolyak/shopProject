@@ -11,6 +11,8 @@ Daemon::Daemon(int port, QObject *parent): QTcpServer(parent)
         }
 
         db = new DataBase;
+
+
 }
 
 void Daemon::incomingConnection(qintptr socketDescriptor)

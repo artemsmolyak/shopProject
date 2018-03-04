@@ -8,7 +8,5 @@ int main(int argc, char *argv[])
 
     Daemon daemon(55555);
 
-
-
     return a.exec();
 }

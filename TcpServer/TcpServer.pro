@@ -1,4 +1,3 @@
-QT -= gui
 QT += network   sql core  gui
 
 CONFIG += c++11 console

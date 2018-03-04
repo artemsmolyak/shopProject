@@ -1,36 +1,40 @@
 import QtQuick 2.2
 
 Item {
-  id: root
-  width: 24
-  height: 24
+    id: root
+    width: 24
+    height: 24
 
-  Rectangle {
-    id: bar1
-    x: 2
-    y: 5
-    width: 20
-    height: 2
-    antialiasing: true
-  }
+    Rectangle {
+      color: "black"
+      id: bar1
+      x: 2
+      y: 5
+      width: 20
+      height: 2
+      antialiasing: true
+    }
 
-  Rectangle {
-    id: bar2
-    x: 2
-    y: 10
-    width: 20
-    height: 2
-    antialiasing: true
-  }
+    Rectangle {
+      id: bar2
+      color: "black"
+      x: 2
+      y: 10
+      width: 20
+      height: 2
+      antialiasing: true
+    }
 
-  Rectangle {
-    id: bar3
-    x: 2
-    y: 15
-    width: 20
-    height: 2
-    antialiasing: true
-  }
+    Rectangle {
+      color: "black"
+      id: bar3
+      x: 2
+      y: 15
+      width: 20
+      height: 2
+      antialiasing: true
+    }
+
 
   property int animationDuration: 350
 

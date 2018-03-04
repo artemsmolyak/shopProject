@@ -4,5 +4,6 @@
         <file>Page1.qml</file>
         <file>MenuBackIcon.qml</file>
         <file>SidePane.qml</file>
+        <file>Page3.qml</file>
     </qresource>
 </RCC>
