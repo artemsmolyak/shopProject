@@ -56,15 +56,20 @@ Item {
         cellHeight: 150
 
 
+         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
 
         //anchors.horizontalCenter: parent.horizontalCenter
         model: myModel1
         delegate:  Rectangle {
+            //id : wrapper
 
             //border.width: 1
            // color: "green"
             width: parentWidth/2
             height: 150
+
+            //color: GridView.isCurrentItem ? "grey" : "white"
+            //focus: true
 
             Column {
                 id : myColumn
@@ -76,6 +81,8 @@ Item {
                     width: parent.width
                     text: modelData.name
                     wrapMode: Text.WrapAnywhere
+
+                    //color: wrapper.GridView.isCurrentItem ? "red" : "black"
                 }
 
                 Image{

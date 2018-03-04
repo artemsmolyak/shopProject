@@ -43,20 +43,20 @@ QSqlError DataBase::connect()
 
 
         //
-//        QImage pic("/home/artem/Pictures/shop/2.png");
-//        QByteArray bArray;
-//        QBuffer buf(&bArray);
-//        buf.open(QIODevice::WriteOnly);
-//        pic.save(&buf, "png");
+        QImage pic("/home/artem/Pictures/shop/2.png");
+        QByteArray bArray;
+        QBuffer buf(&bArray);
+        buf.open(QIODevice::WriteOnly);
+        pic.save(&buf, "png");
 
 
-//        QSqlQuery query;
-//        query.prepare(QLatin1String("UPDATE shop "
-//                                "SET pics = ?,    price = 700 WHERE id = 9  OR id = 14 "));
+        QSqlQuery query;
+        query.prepare(QLatin1String("UPDATE shop "
+                                "SET pics = ?,    price = 700 WHERE id = 14  OR id = 13 "));
 
-//        query.addBindValue(bArray);
+        query.addBindValue(bArray);
 
-//        qDebug() << "----------> save " <<  query.exec() <<query.lastError().text();
+        qDebug() << "----------> save " <<  query.exec() <<query.lastError().text();
 
  //pics = ? AND
 

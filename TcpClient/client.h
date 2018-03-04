@@ -17,7 +17,7 @@ class Client : public QObject
     QQmlContext *qml_root_context;
     QObject * qml_root;
 
-    qint32 blockSize = 0;
+    qint32 blockSize;
 
     QMap <QString, QByteArray>  imageMap;
 
@@ -40,6 +40,8 @@ public:
 public slots:
     void readAnswerFromServer();
     void slotError(QAbstractSocket::SocketError error);
+    void serverDisconnected();
+
 
 signals:
    void getAnswer(QVector <Product> products);

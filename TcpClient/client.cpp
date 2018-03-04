@@ -10,7 +10,7 @@ QMap<QString, QByteArray> Client::getImageMap() const
     return imageMap;
 }
 
-Client::Client(QObject *parent): QObject(parent)
+Client::Client(QObject *parent): QObject(parent), blockSize(0)
 {
     clientSocket =new QTcpSocket();
     clientSocket->setReadBufferSize(0);
@@ -18,11 +18,13 @@ Client::Client(QObject *parent): QObject(parent)
      connect(clientSocket, SIGNAL(readyRead()), this, SLOT(readAnswerFromServer()));
      connect(clientSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotError(QAbstractSocket::SocketError)));
      clientSocket->connectToHost(QHostAddress::LocalHost, 55555);
+     connect(clientSocket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
 
      qDebug() << "wait for connect....";
      clientSocket->waitForConnected();
 
      qDebug() << "connected";
+
 }
 
 Client::~Client(){
@@ -66,16 +68,8 @@ void Client::fillMainList()
 
 
 
-
-
-      connect(this, &Client::getAnswer,  [this] (QVector <Product> products){
-
-           this->setMainProductModel(products);
-           //qDebug() << "have!!!!! " << products.size() << " OK";
-      });
-
+      connect(this, &Client::getAnswer,  [this] (QVector <Product> products){ this->setMainProductModel(products); });
       sendRequest(getGoods);
-
 }
 
 void Client::setMainProductModel(QVector<Product> products)
@@ -154,12 +148,12 @@ void Client::readAnswerFromServer()
 
     QDataStream in(clientSocket);
 
-    for(;;){
+
         if (!blockSize){
 
             if (clientSocket->bytesAvailable() < sizeof(quint32)){
                 qDebug() << "/// bytesAvailable " << 0;
-                break;
+                return;
             }
             in >> blockSize;
         }
@@ -167,7 +161,7 @@ void Client::readAnswerFromServer()
 
         qDebug() <<"clientSocket->bytesAvailable " << clientSocket->bytesAvailable();
         if (clientSocket->bytesAvailable() < blockSize)
-            break;
+            return;
 
 
 
@@ -183,6 +177,8 @@ void Client::readAnswerFromServer()
         in >> answerCommand;
 
         qDebug()<<"answer command" << answerCommand;
+
+        blockSize = 0;
 
         switch (answerCommand) {
         case getGoods:
@@ -239,11 +235,6 @@ void Client::readAnswerFromServer()
         }
 
 
-        blockSize = 0;
-
-    }
-
-
     qDebug() << "out from loop: ";
 }
 
@@ -260,6 +251,12 @@ void Client::slotError(QAbstractSocket::SocketError err)
             );
             qDebug() << strError;
 
+}
+
+void Client::serverDisconnected()
+{
+    qDebug() << "server is disconnected";
+    clientSocket->close();
 }
 
 

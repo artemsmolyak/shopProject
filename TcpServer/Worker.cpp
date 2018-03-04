@@ -166,6 +166,7 @@ void Worker::readyRead(){
 void Worker::disconnected()
 {
         qDebug() << "client disconnected()";
+        //clientSocket->close();
         clientSocket->deleteLater();
         exit(0);
 }
