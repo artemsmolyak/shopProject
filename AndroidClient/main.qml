@@ -8,46 +8,14 @@ ApplicationWindow {
     visible: true
     width: 320
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("Movies Things")
 
 
-//        StackView {
-//            id: stackView
-//            //initialItem: swipeView
-//            anchors.fill: parent
-//        }
-//        Page {
-//            Label {
-//                text: qsTr("Second page")
-//                anchors.centerIn: parent
-//            }
-
-
-//            Button{
-//                width: 100
-//                height: 20
-//                onClicked: {
-//                    console.log("press")
-//                    client.fillMainList()
-//                    stackView.push(Qt.resolvedUrl("Page3.qml"))
-//                }
-//            }
-//        }
-
-
-
-
-
-
-
-
-
-
+   //side menu
     Drawer {
             id: drawer
             width: 0.7 * window.width
             height: window.height
-
         }
 
 
@@ -63,61 +31,21 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        Page1 {
 
-            Label {
-                //text: qsTr("Main page")
-                anchors.centerIn: parent
-            }
-
+        //Main page
+        HomePage{
 
         }
 
 
-        Page {
+        //Catalog
+        CatalogPage{
             Label {
                 text: qsTr("Second page")
                 anchors.centerIn: parent
             }
-
-
-            Button{
-                width: 100
-                height: 100
-                onClicked: {
-                    console.log("press")
-                    client.fillMainList()
-                    stackView.push(Qt.resolvedUrl("Page3.qml"))
-                }
-            }
-
-            ListView{
-                id : secondList
-                anchors.fill: parent
-                model: myModel
-                delegate: Text{
-                    width: 100
-                    height: 100
-                        text: modelData
-                    }
-                }
-
         }
     }
-
-    ListModel {
-        id : secondListModel
-        ListElement {
-                name: "Apple"
-            }
-            ListElement {
-                name: "Orange"
-            }
-            ListElement {
-                name: "Banana"
-            }
-    }
-
 
 
     footer: TabBar {
@@ -137,8 +65,15 @@ ApplicationWindow {
 
     header:Rectangle {
         width: 48
-        height: 48
-        //color: "black"
+        height: 70
+        color: "black"
+
+//        Rectangle{
+//            anchors.fill: parent
+//            border.width: 1
+//            color: "green"
+//        }
+
 
         MouseArea {
             anchors.fill: parent
@@ -148,15 +83,12 @@ ApplicationWindow {
             }
         }
 
-        MenuBackIcon {
-          id: menuBackIcon
-          anchors.centerIn: parent
-        }
+//        MenuBackIcon {
+//          id: menuBackIcon
+//          anchors.centerIn: parent
+//        }
       }
 
-//    SidePane{
-//        id : sidepanel
-//        visible: false
-//    }
+
 
 }

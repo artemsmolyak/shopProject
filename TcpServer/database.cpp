@@ -75,7 +75,8 @@ QSqlError DataBase::createMainTable()
                                               "(id integer primary key,  "
                                                "name TEXT, "
                                                "pics BLOB,  "
-                                                "price integer "
+                                                "price integer,"
+                                                "category TEXT"
                                               ")")))
             return q.lastError();
 

@@ -5,13 +5,16 @@ Item {
    objectName: "mainPage"
 
 
+   property int parentWidth : width
+   property int parentHeight : height
+
 
 
     Component.onCompleted: {
         client.fillMainList();
+        console.log("width = " + width + "  " + height)
     }
-    property int parentWidth : width
-    property int parentHeight : height
+
 
     Component {
             id: contactDelegate
@@ -53,10 +56,10 @@ Item {
         anchors.fill: parent
 
         cellWidth: parentWidth/2
-        cellHeight: 150
+        cellHeight: 160
 
 
-         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+         //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
 
         //anchors.horizontalCenter: parent.horizontalCenter
         model: myModel1
@@ -64,9 +67,10 @@ Item {
             //id : wrapper
 
             //border.width: 1
-           // color: "green"
+            //color: "green"
+
             width: parentWidth/2
-            height: 150
+            height: 160
 
             //color: GridView.isCurrentItem ? "grey" : "white"
             //focus: true
@@ -75,22 +79,22 @@ Item {
                 id : myColumn
                 anchors.fill: parent
 
-                Text {
-                    anchors.horizontalCenter:  parent.horizontalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: parent.width
-                    text: modelData.name
-                    wrapMode: Text.WrapAnywhere
-
-                    //color: wrapper.GridView.isCurrentItem ? "red" : "black"
-                }
-
                 Image{
                     id : myImage
                     anchors.horizontalCenter:  parent.horizontalCenter
-                    width: 100
-                    height: 100
+                    width: 90
+                    height: 90
                     source: "image://myprovider/"+modelData.id
+                }
+
+                Text {
+                    width: parent.width * 0.8
+                    anchors.horizontalCenter:  parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: modelData.name
+                    wrapMode: Text.Wrap
+
+                    //color: wrapper.GridView.isCurrentItem ? "red" : "black"
                 }
             }
 
