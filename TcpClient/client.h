@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QQmlContext>
 #include <../CommonFiles/product.h>
+#include <../CommonFiles/catalog.h>
 #include <../CommonFiles/const.h>
 #include <QMap>
 
@@ -21,6 +22,9 @@ class Client : public QObject
 
     QMap <QString, QByteArray>  imageMap;
 
+
+    QList<QObject*> productsModel;
+
 public:
     Client(QObject *parent = nullptr);
     ~Client();
@@ -31,8 +35,12 @@ public:
     void sendRequest(Request request, QVector<QString> params = QVector<QString>());
 
     Q_INVOKABLE void fillMainList();
+    Q_INVOKABLE void fillCatalogList();
 
-    void setMainProductModel(QVector <Product> products);
+
+
+
+    void setCatalogsModel(QVector <Catalog> catalogs);
 
 
     QMap<QString, QByteArray> getImageMap() const;
@@ -42,9 +50,11 @@ public slots:
     void slotError(QAbstractSocket::SocketError error);
     void serverDisconnected();
 
+    void setMainProductModel(QVector <Product> products);
+
 
 signals:
-   void getAnswer(QVector <Product> products);
+   void getAnswer(QVector <Product>  products);
 
 };
 

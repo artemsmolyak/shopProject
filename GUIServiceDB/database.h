@@ -7,7 +7,6 @@
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <../CommonFiles/product.h>
-#include <../CommonFiles/catalog.h>.h>
 
 class DataBase : public QObject
 {
@@ -18,20 +17,10 @@ public:
     DataBase();
 
     QSqlError connect();
-
-    //create
     QSqlError createMainTable();
     QSqlError createUsersTable();
+    QVector <Product> getAll();
     QSqlError createUser(QString login, QString password);
-
-
-    //select
-    QVector<Product> getAll();
-    QVector <Catalog> getCategory();
-
-
-
-
     bool isUserExist(QString login, QString password);
 
     QString getHash(QString str);

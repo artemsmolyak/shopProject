@@ -12,9 +12,7 @@ int main(int argc, char *argv[])
     Client client;
 
     QQmlApplicationEngine engine;
-
     QQmlContext * context = engine.rootContext();
-
     context->setContextProperty("client", &client);
     client.setQmlRootContext(context);
     MyImageProvider *imageProvider = new MyImageProvider(&client);

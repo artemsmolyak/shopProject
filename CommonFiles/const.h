@@ -7,7 +7,8 @@ enum Request
     newUser,
     auth,
     testPing,
-    error
+    error,
+    getCatalogs
 };
 
 

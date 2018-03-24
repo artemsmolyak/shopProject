@@ -5,13 +5,15 @@ CONFIG += c++11
 SOURCES += main.cpp\
                 ../TcpClient/client.cpp\
                 ../CommonFiles/product.cpp\
-                myimageprovider.cpp
+                myimageprovider.cpp\
+                 ../CommonFiles/catalog.cpp
 
 HEADERS += \
                 ../TcpClient/client.h\
                 ../CommonFiles/product.h\
                 ../CommonFiles/const.h\
-                myimageprovider.h
+                myimageprovider.h\
+                ../CommonFiles/catalog.h
 
 RESOURCES += qml.qrc
 

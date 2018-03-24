@@ -18,11 +18,14 @@ SOURCES += main.cpp \
     daemon.cpp \
     database.cpp \
     ../CommonFiles/product.cpp \
-    Worker.cpp
+    Worker.cpp\
+   ../CommonFiles/catalog.cpp
+
 
 HEADERS += \
     daemon.h \
     socketthread.h \
     database.h \
     ../CommonFiles/product.h \
-    ../CommonFiles/const.h
+    ../CommonFiles/const.h\
+    ../CommonFiles/catalog.h

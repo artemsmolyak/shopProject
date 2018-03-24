@@ -63,7 +63,11 @@ void Worker::readyRead(){
                 {
                         streamAnswer << (qint32)getGoods;
                         qDebug() << "getGoods " <<  (qint32)getGoods;;
-                        QVector <Product> products = db->getAll();
+                        QVector  <Product> products = db->getAll();
+
+
+                         std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
+
 
                         qDebug() << "products size " << products.size();
 
@@ -140,6 +144,22 @@ void Worker::readyRead(){
                         streamAnswer <<testPing;
                         qDebug() <<"  testPing ";
                         break;
+                }
+                case getCatalogs:
+                {
+                        streamAnswer << (qint32)getCatalogs;
+                        qDebug() << "getCatalogs " <<  (qint32)getCatalogs;
+                        QVector  <Catalog> catalogs = db->getCategory();
+
+                        qDebug() << "catalogs size " << catalogs.size();
+
+                        if (catalogs.size() > INT32_MAX){
+                            qDebug() << "the data is too big. can't be sending";
+                            break;
+                        }
+
+                        streamAnswer << catalogs;
+
                 }
 
                 default:

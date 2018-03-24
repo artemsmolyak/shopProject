@@ -2,7 +2,7 @@
 #include <QDataStream>
 #include <QHostAddress>
 #include <QDebug>
-
+#include <algorithm>
 
 
 QMap<QString, QByteArray> Client::getImageMap() const
@@ -53,76 +53,43 @@ void Client::sendRequest(Request request, QVector<QString> params){
 
 void Client::fillMainList()
 {
-    qDebug() << "fillllllllll";
+    qDebug() << "fillMainList";
 
-    QStringList lst;
-    lst << "first" << "second" << "sdfsdfsdfsd" <<"!@#&!#&";
-
-    qDebug() <<"qml_root_context: " <<  qml_root_context;
-
-    if (qml_root_context)
-    {
-        qDebug() << "set model";
-              qml_root_context->setContextProperty("myModel", QVariant::fromValue(lst));
-    }
-
-
-
-      connect(this, &Client::getAnswer,  [this] (QVector <Product> products){ this->setMainProductModel(products); });
+      connect(this, SIGNAL(getAnswer(QVector <Product>)),  this,  SLOT(setMainProductModel(QVector <Product>)));
       sendRequest(getGoods);
+}
+
+void Client::fillCatalogList()
+{
+    qDebug() << "fillCatalogList";
+
+     //connect(this, &Client::getAnswer,  [this] (QVector <Catalog> catalogs){ this->setCatalogsModel(catalogs); });
+     sendRequest(getCatalogs);
 }
 
 void Client::setMainProductModel(QVector<Product> products)
 {
-    QList<QObject*> productsModel;
+     qDebug() << "setMainProductModel";
+
 
     for(QVector <Product>::iterator it = products.begin(); it != products.end(); ++it){
-        productsModel.append(it);
-        qDebug() << "append";
+
         Product prod = *it;
-        int key = prod.id();
-        QByteArray img = prod.pic();
-        imageMap.insert(QString::number(key), img);
+
+        if (prod.isMain()){
+
+            productsModel.append(new Product(prod));
+
+            int key = prod.id();
+            QByteArray img = prod.pic();
+            imageMap.insert(QString::number(key), img);
+        }
     }
 
 
-    qDebug() << "setMainProductModel";
 
-//    Product * pr = new Product();
-//    pr->setId(2);
-//    pr->setName("name'");
-//    pr->setPrice(255);
-//    productsModel.append(pr);
-
-
-//   Product * pr2 = new Product();
-//   pr2->setId(2);
-//   pr2->setName("name'");
-//   pr2->setPrice(255);
-
-//   productsModel.append(pr2);
-//   productsModel.append(pr);
-
-
-//   productsModel.append(pr2);
-//   productsModel.append(pr);
-//   productsModel.append(pr2);
-//   productsModel.append(pr);
-
-
-//   Product * prrrr = (Product*)productsModel.at(1);
-//   qDebug() << "price " << prrrr->price();
-
-
-
-   QStringList lst;
-   lst << "first" << "second" << "sdfsdfsdfsd" <<"!@#&!#&";
      if (qml_root_context){
             qml_root_context->setContextProperty("myModel1", QVariant::fromValue(productsModel));
-
-             //qml_root_context->setContextProperty("myModel", QVariant::fromValue(lst));
-
-              qDebug() << "SET!!!!!!!!!!! " << productsModel.size() << lst;
      }
 
 
@@ -136,6 +103,26 @@ void Client::setMainProductModel(QVector<Product> products)
      {
          qDebug() << "there is no object";
      }
+
+}
+
+void Client::setCatalogsModel(QVector<Catalog> catalogs)
+{
+    QList<QObject*> catalogsModel;
+
+    for(auto it = catalogs.begin(); it != catalogs.end(); ++it){
+        catalogsModel.append(new Catalog(*it));
+    }
+
+
+    qDebug() << "setCatalogsModel";
+
+
+     if (qml_root_context){
+            qml_root_context->setContextProperty("catalogsModel", QVariant::fromValue(catalogsModel));
+     }
+
+    // disconnect(this, &Client::getAnswer, this, SLOT(setCheckedall(bool)));
 
 }
 
@@ -164,9 +151,6 @@ void Client::readAnswerFromServer()
             return;
 
 
-
-
-
         // if (clientSocket->bytesAvailable() < blockSize){
         qDebug() << "client bytes available " << clientSocket->bytesAvailable();
         //  return;
@@ -183,19 +167,18 @@ void Client::readAnswerFromServer()
         switch (answerCommand) {
         case getGoods:
         {
-            QVector <Product> products;
+            QVector <Product>  products;
             in >> products;
 
+
+
+
+            qDebug() << products.at(0).isMain() << products.at(1).isMain();
             qDebug() << "products size " <<products.size();
 
-
-            //Product pr = products.at(0);
-            //QImage img = pr.pic();
-
-            //qDebug() <<"image "<< img.width() << img.height();
+             std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
 
             emit getAnswer(products);
-
         }
             break;
 
@@ -227,6 +210,21 @@ void Client::readAnswerFromServer()
             in >> errorStr;
             qDebug() << "error" << errorStr;
             break;
+        }
+
+         case getCatalogs:
+        {
+//            QMap<QString, QByteArray> catalogs;
+//            in >> catalogs;
+
+//            qDebug() << "catalogs size " <<catalogs.size();
+
+
+//             QVector <Product> products;
+
+//            emit getAnswer(products);
+             break;
+
         }
 
         default:

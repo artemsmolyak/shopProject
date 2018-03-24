@@ -1,5 +1,25 @@
 #include "product.h"
 
+QString Product::detail() const
+{
+    return m_detail;
+}
+
+void Product::setDetail(const QString &detail)
+{
+    m_detail = detail;
+}
+
+bool Product::isMain() const
+{
+    return m_isMain;
+}
+
+void Product::setIsMain(bool isMain)
+{
+    m_isMain = isMain;
+}
+
 Product::Product()
 {
 
@@ -11,8 +31,8 @@ Product::Product()
 //    m_name = "sdfsdfds";
 //}
 
-Product::Product(int id, QString name, QByteArray pic,  int price):
-    m_id(id), m_name(name), m_pic(pic), m_price(price)
+Product::Product(int id, QString name,  int price, QString detail, QByteArray pic, bool isMain):
+    m_id(id), m_name(name), m_price(price), m_detail(detail), m_pic(pic), m_isMain(isMain)
 {
 
 }
@@ -24,6 +44,8 @@ Product::Product(const Product &data)
      m_name = data.m_name;
      m_pic = data.m_pic;
      m_price = data.m_price;
+     m_detail = data.m_detail;
+     m_isMain = data.m_isMain;
 }
 
 
@@ -66,7 +88,9 @@ Product Product::operator =(Product data)
        this->m_id = data.m_id;
        this->m_name = data.m_name;
        this->m_pic = data.m_pic;
+       this->detail() = data.detail();
        this->m_price = data.m_price;
+       this->m_isMain = data.m_isMain;
 
     return *this;
 }
@@ -76,13 +100,19 @@ Product::~Product()
 
 }
 
+
 QDataStream& operator <<(QDataStream& stream, const Product& data)
 {
      stream << data.id();
      stream << data.name();
-     stream << data.pic();
      stream << data.price();
+     stream << data.detail();
+     stream << data.pic();
+     stream << data.isMain();
+
+     return stream;
 }
+
 
 QDataStream& operator >>(QDataStream& stream, Product & data)
 {
@@ -94,13 +124,21 @@ QDataStream& operator >>(QDataStream& stream, Product & data)
     stream >> name;
     data.setName(name);
 
+    int price;
+    stream >> price;
+    data.setPrice(price);
+
+    QString detail;
+    stream >> detail;
+    data.setDetail(detail);
+
     QByteArray image;
     stream >> image;
     data.setPic(image);
 
-    int price;
-    stream >> price;
-    data.setPrice(price);
+    bool isMain;
+    stream >> isMain;
+    data.setIsMain(isMain);
 
     return stream;
 }

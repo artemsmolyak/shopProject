@@ -12,18 +12,26 @@ class Product : public QObject
     int m_id;
     QString m_name;
     int m_price;
+    QString m_detail;
+    bool m_isMain;
+
     QByteArray m_pic;
 
 
      Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
      Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
      Q_PROPERTY(int price READ price WRITE setPrice NOTIFY priceChanged)
+     Q_PROPERTY(QString detail READ detail WRITE setDetail NOTIFY detailChanged)
+     Q_PROPERTY(bool isMain READ isMain WRITE setIsMain NOTIFY isMainChanged)
 
 
 public:
 
     Product();
-    Product(int id, QString name, QByteArray pic, int price);
+
+    Product(int id, QString description, int price, QString detail, QByteArray pic, bool isMain);
+
+
     Product(const Product &data);
     Product operator=(Product prod);
 
@@ -42,6 +50,12 @@ public:
     void setPic(QByteArray pic){m_pic = pic;};
 
 
+    QString detail() const;
+    void setDetail(const QString &detail);
+
+    bool isMain() const;
+    void setIsMain(bool isMain);
+
 public slots:
 
 
@@ -49,6 +63,8 @@ signals:
     void idChanged();
     void nameChanged();
     void priceChanged();
+    void detailChanged();
+    void isMainChanged();
 };
 
 

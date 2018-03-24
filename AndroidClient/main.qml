@@ -62,11 +62,14 @@ ApplicationWindow {
 
 
 
+    //header
 
     header:Rectangle {
-        width: 48
-        height: 70
-        color: "black"
+        width: parent.width
+        height: 38
+
+        // color: "black"
+        //border.width: 1
 
 //        Rectangle{
 //            anchors.fill: parent
@@ -78,15 +81,15 @@ ApplicationWindow {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                 menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
+                 //menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
                  drawer.visible = true
             }
         }
 
-//        MenuBackIcon {
-//          id: menuBackIcon
-//          anchors.centerIn: parent
-//        }
+        MenuBackIcon {
+          id: menuBackIcon
+          anchors.left: parent.left
+        }
       }
 
 

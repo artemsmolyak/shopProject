@@ -12,7 +12,7 @@ Item {
 
     Component.onCompleted: {
         client.fillMainList();
-        console.log("width = " + width + "  " + height)
+        console.log("fillMainList = " + myModel1)
     }
 
 
@@ -25,6 +25,15 @@ Item {
                 color: "green"
                 width: 100
                 height: 100
+
+//                                Image{
+//                                    id : myImage
+//                                    anchors.horizontalCenter:  parent.horizontalCenter
+//                                    width: 90
+//                                    height: 90
+//                                    source: "image://myprovider/"+modelData.id
+//                                }
+
 
 //                Column {
 //                    id : myColumn
@@ -58,10 +67,6 @@ Item {
         cellWidth: parentWidth/2
         cellHeight: 160
 
-
-         //highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-
-        //anchors.horizontalCenter: parent.horizontalCenter
         model: myModel1
         delegate:  Rectangle {
             //id : wrapper
@@ -98,7 +103,7 @@ Item {
                 }
             }
 
-        }
+        } //delegate
     }
 
 

@@ -24,10 +24,10 @@ QSqlError DataBase::connect()
         else
         {
             db = QSqlDatabase::addDatabase("QSQLITE");
-            qDebug() << "connecting to database " << QDir::homePath()+"/shop2.sqlite";
+            qDebug() << "connecting to database " << QDir::homePath()+"/shop.sqlite";
         }
 
-         db.setDatabaseName(QDir::homePath()+"/shop2.sqlite");
+         db.setDatabaseName(QDir::homePath()+"/shop.sqlite");
 
 
 
@@ -71,14 +71,14 @@ QSqlError DataBase::createMainTable()
 {
         QSqlQuery q;
 
-//        if (!q.exec(QLatin1String("create table IF not EXISTS shop"
-//                                              "(id integer primary key,  "
-//                                               "name TEXT, "
-//                                               "pics BLOB,  "
-//                                                "price integer,"
-//                                                "category TEXT"
-//                                              ")")))
-//            return q.lastError();
+        if (!q.exec(QLatin1String("create table IF not EXISTS shop"
+                                              "(id integer primary key,  "
+                                               "name TEXT, "
+                                               "pics BLOB,  "
+                                                "price integer,"
+                                                "category TEXT"
+                                              ")")))
+            return q.lastError();
 
         return q.lastError();
 }
@@ -97,55 +97,28 @@ QSqlError DataBase::createUsersTable()
     return q.lastError();
 }
 
-QVector <Product> DataBase::getAll()
+QVector<Product> DataBase::getAll()
 {
-    QVector  <Product> products;
+    QVector <Product> products;
     QSqlQuery q;
-    q.prepare("SELECT p.id, p.description, p.price, p.detail, pics.id, pics.array, pics.isMain FROM Product p JOIN PicsProduct pics  ON p.id = pics.idProduct ");
+    q.prepare("select * from shop");
     q.exec();
-
-    qDebug() << q.lastError().text();
 
     while (q.next()) {
            int id = q.value(0).toInt();
-           QString description = q.value(1).toString();
-           int  price = q.value(2).toInt();
-           QString detail = q.value(3).toString();
-           QByteArray pic = q.value(5).toByteArray();
-           int isMainInt = q.value(6).toInt();
+           QString name = q.value(1).toString();
+           QByteArray bArrayPic = q.value(2).toByteArray();
 
-           qDebug() <<"int "<< isMainInt;
+//           QImage  pic;
+//           pic.loadFromData(bArrayPic);
+//           qDebug() << "image server "<< pic.width() << pic.height();
 
-           bool isMain = isMainInt == 0 ? false : true;
-           Product product(id, description, price, detail, pic, isMain);
-
+           int  price = q.value(3).toInt();
+           Product product(id, name, bArrayPic, price);
            products.push_back(product);
     }
 
-     std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
-
     return products;
-
-}
-
-QVector <Catalog> DataBase::getCategory()
-{
-    QVector <Catalog>  catalogsVector;
-
-    QSqlQuery query;
-    query.prepare("SELECT * FROM Category");
-    query.exec();
-
-    while (query.next()) {
-           int id = query.value(0).toInt();
-          QString name = query.value(1).toString();
-          QByteArray array = query.value(2).toByteArray();
-
-          Catalog cat(id,name, array);
-          catalogsVector.append(cat);
-      }
-
-    return catalogsVector;
 }
 
 QSqlError  DataBase::createUser(QString login, QString password)
