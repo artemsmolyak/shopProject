@@ -10,6 +10,7 @@
 #include <../CommonFiles/const.h>
 #include <QMap>
 
+
 class Client : public QObject
 {
     Q_OBJECT
@@ -20,10 +21,15 @@ class Client : public QObject
 
     qint32 blockSize;
 
-    QMap <QString, QByteArray>  imageMap;
+    QMap <QString, QByteArray>  imageProductMap;
+    QMap <QString, QByteArray>  imageCatalogMap;
+
 
 
     QList<QObject*> productsModel;
+    QList<QObject*> catalogsModel;
+
+
 
 public:
     Client(QObject *parent = nullptr);
@@ -40,10 +46,12 @@ public:
 
 
 
-    void setCatalogsModel(QVector <Catalog> catalogs);
 
 
-    QMap<QString, QByteArray> getImageMap() const;
+
+    QMap<QString, QByteArray> getImageProductMap() const;
+
+    QMap<QString, QByteArray> getImageCatalogMap() const;
 
 public slots:
     void readAnswerFromServer();
@@ -51,10 +59,12 @@ public slots:
     void serverDisconnected();
 
     void setMainProductModel(QVector <Product> products);
+    void setCatalogsModel(QVector <Catalog> catalogs);
 
 
 signals:
    void getAnswer(QVector <Product>  products);
+   void getAnswer(QVector <Catalog>  products);
 
 };
 

@@ -3,11 +3,17 @@
 #include <QHostAddress>
 #include <QDebug>
 #include <algorithm>
+#include <../CommonFiles/catalog.h>
 
 
-QMap<QString, QByteArray> Client::getImageMap() const
+QMap<QString, QByteArray> Client::getImageProductMap() const
 {
-    return imageMap;
+    return imageProductMap;
+}
+
+QMap<QString, QByteArray> Client::getImageCatalogMap() const
+{
+    return imageCatalogMap;
 }
 
 Client::Client(QObject *parent): QObject(parent), blockSize(0)
@@ -63,7 +69,7 @@ void Client::fillCatalogList()
 {
     qDebug() << "fillCatalogList";
 
-     //connect(this, &Client::getAnswer,  [this] (QVector <Catalog> catalogs){ this->setCatalogsModel(catalogs); });
+     connect(this, SIGNAL(getAnswer(QVector <Catalog>)),  this, SLOT(setCatalogsModel(QVector <Catalog>)));
      sendRequest(getCatalogs);
 }
 
@@ -82,41 +88,39 @@ void Client::setMainProductModel(QVector<Product> products)
 
             int key = prod.id();
             QByteArray img = prod.pic();
-            imageMap.insert(QString::number(key), img);
+            imageProductMap.insert(QString::number(key), img);
         }
     }
-
-
 
      if (qml_root_context){
             qml_root_context->setContextProperty("myModel1", QVariant::fromValue(productsModel));
      }
 
-
-
-     QObject * obj = qml_root->findChild<QObject*>("mainPage");
-     if (obj)
-     {
-          QMetaObject::invokeMethod(obj, "update");
-     }
-     else
-     {
-         qDebug() << "there is no object";
-     }
-
+//     QObject * obj = qml_root->findChild<QObject*>("mainPage");
+//     if (obj)
+//     {
+//          QMetaObject::invokeMethod(obj, "update");
+//     }
+//     else
+//     {
+//         qDebug() << "there is no object";
+//     }
 }
 
 void Client::setCatalogsModel(QVector<Catalog> catalogs)
 {
-    QList<QObject*> catalogsModel;
+        qDebug() << "setCatalogsModel";
 
-    for(auto it = catalogs.begin(); it != catalogs.end(); ++it){
-        catalogsModel.append(new Catalog(*it));
+    for(QVector <Catalog>::iterator  it  = catalogs.begin(); it != catalogs.end(); ++it){
+
+        Catalog catalog = *it;
+
+        catalogsModel.append(new Catalog(catalog));
+
+        int key = catalog.id();
+        QByteArray img = catalog.pic();
+        imageCatalogMap.insert(QString::number(key), img);
     }
-
-
-    qDebug() << "setCatalogsModel";
-
 
      if (qml_root_context){
             qml_root_context->setContextProperty("catalogsModel", QVariant::fromValue(catalogsModel));
@@ -170,14 +174,6 @@ void Client::readAnswerFromServer()
             QVector <Product>  products;
             in >> products;
 
-
-
-
-            qDebug() << products.at(0).isMain() << products.at(1).isMain();
-            qDebug() << "products size " <<products.size();
-
-             std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
-
             emit getAnswer(products);
         }
             break;
@@ -214,15 +210,12 @@ void Client::readAnswerFromServer()
 
          case getCatalogs:
         {
-//            QMap<QString, QByteArray> catalogs;
-//            in >> catalogs;
+            QVector<Catalog> catalogs;
+            in >> catalogs;
 
-//            qDebug() << "catalogs size " <<catalogs.size();
+            qDebug() << "catalogs size " <<catalogs.size();
 
-
-//             QVector <Product> products;
-
-//            emit getAnswer(products);
+            emit getAnswer(catalogs);
              break;
 
         }

@@ -4,6 +4,7 @@
 #include <QObject>
 #include "QString"
 #include <QImage>
+#include <QDataStream>
 
 class Product : public QObject
 {
@@ -28,9 +29,7 @@ class Product : public QObject
 public:
 
     Product();
-
     Product(int id, QString description, int price, QString detail, QByteArray pic, bool isMain);
-
 
     Product(const Product &data);
     Product operator=(Product prod);
@@ -55,8 +54,6 @@ public:
 
     bool isMain() const;
     void setIsMain(bool isMain);
-
-public slots:
 
 
 signals:

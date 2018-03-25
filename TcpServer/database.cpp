@@ -122,7 +122,7 @@ QVector <Product> DataBase::getAll()
            products.push_back(product);
     }
 
-     std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
+     //std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
 
     return products;
 

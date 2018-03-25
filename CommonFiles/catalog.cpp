@@ -30,13 +30,12 @@ void Catalog::setPic(const QByteArray &pic)
     m_pic = pic;
 }
 
-Catalog::Catalog()
+Catalog::Catalog(QObject * parent): QObject(parent)
 {
 
 }
 
-Catalog::Catalog(int id, QString name, QByteArray pic):
-    m_id(id), m_name(name), m_pic(pic)
+Catalog::Catalog(int id, QString name, QByteArray pic): m_id(id), m_name(name), m_pic(pic)
 {
 
 }
@@ -48,6 +47,7 @@ Catalog::Catalog(const Catalog &data)
     m_pic = data.m_pic;
 }
 
+
 Catalog Catalog::operator=(Catalog data)
 {
     this->m_id = data.m_id;
@@ -57,13 +57,16 @@ Catalog Catalog::operator=(Catalog data)
     return *this;
 }
 
+Catalog::~Catalog()
+{
 
+}
 
 QDataStream &operator >>(QDataStream &stream, Catalog &data)
 {
-    int _id;
-    stream >> _id;
-    data.setId(_id);
+   int iid;
+   stream >> iid;
+   data.setId(iid);
 
     QString name;
     stream >> name;

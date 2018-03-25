@@ -63,10 +63,7 @@ void Worker::readyRead(){
                 {
                         streamAnswer << (qint32)getGoods;
                         qDebug() << "getGoods " <<  (qint32)getGoods;;
-                        QVector  <Product> products = db->getAll();
-
-
-                         std::for_each(products.begin(), products.end(), [](Product prod){qDebug() << prod.isMain(); });
+                        QVector  <Product> products = db->getAll();                       
 
 
                         qDebug() << "products size " << products.size();
@@ -159,7 +156,7 @@ void Worker::readyRead(){
                         }
 
                         streamAnswer << catalogs;
-
+                        break;
                 }
 
                 default:

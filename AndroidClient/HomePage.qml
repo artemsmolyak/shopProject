@@ -89,7 +89,7 @@ Item {
                     anchors.horizontalCenter:  parent.horizontalCenter
                     width: 90
                     height: 90
-                    source: "image://myprovider/"+modelData.id
+                    source: "image://myprovider/product/"+modelData.id
                 }
 
                 Text {

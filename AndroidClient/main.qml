@@ -37,13 +37,9 @@ ApplicationWindow {
 
         }
 
-
         //Catalog
         CatalogPage{
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
-            }
+
         }
     }
 

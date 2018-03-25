@@ -14,15 +14,26 @@ MyImageProvider::~MyImageProvider()
 
 QPixmap MyImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    //client->sendRequest(getGoods);
-    //QImage img("/home/artem/Pictures/shop/1.png");
-    //
 
-    QByteArray imgByteArray = client->getImageMap().value(id);
+    QStringList list = id.split("/");
 
-    QImage img;
-    img.loadFromData(imgByteArray);
+    if   (list[0] == "product"){
+        QByteArray imgByteArray = client->getImageProductMap().value(list[1]);
 
-    QPixmap pixmap =QPixmap::fromImage(img);
-    return pixmap;
+        QImage img;
+        img.loadFromData(imgByteArray);
+
+        QPixmap pixmap =QPixmap::fromImage(img);
+        return pixmap;
+    }
+    else if   (list[0] == "catalog"){
+        QByteArray imgByteArray = client->getImageCatalogMap().value(list[1]);
+
+        QImage img;
+        img.loadFromData(imgByteArray);
+
+        QPixmap pixmap =QPixmap::fromImage(img);
+        return pixmap;
+    }
+
 }

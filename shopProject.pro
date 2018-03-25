@@ -1,8 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS =\
-      TcpServer\
-      TcpClient\
+      TcpServer \
+      TcpClient \
     AndroidClient \
     GUIServiceDB
 

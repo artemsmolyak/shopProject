@@ -16,8 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     client.cpp \
-    ../CommonFiles/product.cpp
+    ../CommonFiles/product.cpp \
+    ../CommonFiles/catalog.cpp
 
 HEADERS += \
     client.h \
-     ../CommonFiles/product.h
+     ../CommonFiles/product.h \
+     ../CommonFiles/catalog.h

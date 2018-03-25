@@ -2,11 +2,12 @@
 #define CATALOG_H
 
 #include <QObject>
+#include <QDataStream>
 
 class Catalog : public QObject
 {
     Q_OBJECT
-    
+
     int m_id;
     QString m_name;
     QByteArray m_pic;
@@ -17,11 +18,13 @@ class Catalog : public QObject
     
     
 public:
-    Catalog();
+    explicit Catalog(QObject * parent = NULL);
     Catalog(int id, QString name, QByteArray pic);
-    Catalog(const Catalog &data);
+
+    Catalog(const Catalog  &data);
     Catalog operator=(Catalog data);
 
+    ~Catalog();
 
     
     int id() const;
@@ -34,8 +37,7 @@ public:
     
 signals:
     void idChanged();
-    void nameChanged();
-    
+    void nameChanged();    
     
 };
 

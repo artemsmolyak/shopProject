@@ -2,18 +2,18 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp\
-                ../TcpClient/client.cpp\
-                ../CommonFiles/product.cpp\
-                myimageprovider.cpp\
+SOURCES += main.cpp \
+                ../TcpClient/client.cpp \
+                ../CommonFiles/product.cpp \
+                myimageprovider.cpp \
                  ../CommonFiles/catalog.cpp
 
 HEADERS += \
-                ../TcpClient/client.h\
-                ../CommonFiles/product.h\
-                ../CommonFiles/const.h\
-                myimageprovider.h\
-                ../CommonFiles/catalog.h
+                ../TcpClient/client.h \
+                ../CommonFiles/product.h \
+                ../CommonFiles/const.h \
+                myimageprovider.h \
+                 ../CommonFiles/catalog.h
 
 RESOURCES += qml.qrc
 
