@@ -6,6 +6,11 @@ Item {
     property int parentHeight : height
 
 
+    property var fontSize: 16
+    FontLoader { id: fixedFont; name: "Drum"; source: "fonts/11613.ttf" }
+
+
+
     Component.onCompleted: {
         client.fillCatalogList();
        // console.log("width = " + width + "  " + height)
@@ -38,7 +43,10 @@ Item {
                     //anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     text: modelData.name
-                    wrapMode: Text.WrapAnywhere
+                    wrapMode: Text.Wrap
+
+                    font.family: fixedFont.name
+                    font.pixelSize: fontSize
                 }
             }
             }

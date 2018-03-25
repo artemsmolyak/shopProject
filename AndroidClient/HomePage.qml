@@ -4,6 +4,9 @@ Item {
    id : mainPage
    objectName: "mainPage"
 
+   property var fontSize: 14
+   FontLoader { id: fixedFont; name: "Drum"; source: "fonts/11613.ttf" }
+
 
    property int parentWidth : width
    property int parentHeight : height
@@ -12,7 +15,7 @@ Item {
 
     Component.onCompleted: {
         client.fillMainList();
-        console.log("fillMainList = " + myModel1)
+        console.log("fillMainList = ")
     }
 
 
@@ -69,16 +72,9 @@ Item {
 
         model: myModel1
         delegate:  Rectangle {
-            //id : wrapper
-
-            //border.width: 1
-            //color: "green"
 
             width: parentWidth/2
             height: 160
-
-            //color: GridView.isCurrentItem ? "grey" : "white"
-            //focus: true
 
             Column {
                 id : myColumn
@@ -99,7 +95,16 @@ Item {
                     text: modelData.name
                     wrapMode: Text.Wrap
 
-                    //color: wrapper.GridView.isCurrentItem ? "red" : "black"
+                    font.family: fixedFont.name
+                    font.pixelSize: fontSize
+                }
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                     console.log("click")
+                     stackView.push( Qt.resolvedUrl("CurrentProduct.qml"))
                 }
             }
 

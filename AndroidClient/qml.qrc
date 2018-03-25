@@ -6,5 +6,23 @@
         <file>SidePane.qml</file>
         <file>Page3.qml</file>
         <file>CatalogPage.qml</file>
+        <file>SideMenu.qml</file>
+        <file>pics/logo.png</file>
+        <file>main.cpp</file>
+        <file>myimageprovider.cpp</file>
+        <file>myimageprovider.h</file>
+        <file>icons/home.jpg</file>
+        <file>icons/home.png</file>
+        <file>icons/bag.png</file>
+        <file>icons/account.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/help.png</file>
+        <file>CurrentProduct.qml</file>
+        <file>fonts/11613.ttf</file>
+        <file>fonts/11592.ttf</file>
+        <file>fonts/11586.otf</file>
+        <file>fonts/11587.ttf</file>
+        <file>pics/logo2.png</file>
+        <file>mainPage.qml</file>
     </qresource>
 </RCC>

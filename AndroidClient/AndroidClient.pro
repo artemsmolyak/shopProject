@@ -8,12 +8,14 @@ SOURCES += main.cpp \
                 myimageprovider.cpp \
                  ../CommonFiles/catalog.cpp
 
+
 HEADERS += \
                 ../TcpClient/client.h \
                 ../CommonFiles/product.h \
                 ../CommonFiles/const.h \
                 myimageprovider.h \
                  ../CommonFiles/catalog.h
+
 
 RESOURCES += qml.qrc
 
@@ -24,4 +26,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    Page3.qml
+    Page3.qml \
+    SideMenu.qml \
+    pics/logo.png \
+    CurrentProduct.qml
