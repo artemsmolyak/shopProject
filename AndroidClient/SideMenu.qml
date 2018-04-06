@@ -47,6 +47,13 @@ Item {
                 text: qsTr("Home")
                 font.family: fixedFont.name
                 font.pixelSize: fontSize
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                          stackView.push("MainPage.qml")
+                          drawer.visible = false
+                    }
+                }
             }
         }
 

@@ -16,61 +16,76 @@ ApplicationWindow {
 
 
    //side menu
-    Drawer {
-            id: drawer
-            width: 0.7 * window.width
-            height: window.height
+//    Drawer {
+//            id: drawer
+//            width: 0.7 * window.width
+//            height: window.height
 
-            SideMenu{
-                anchors.fill:parent
-            }
-        }
+//            SideMenu{
+//                anchors.fill:parent
+//            }
+//        }
 
 
+    //side menu
+     Drawer {
+             id: drawer
+             width: 0.7 * window.width
+             height: window.height
+
+             SideMenu{
+                 anchors.fill:parent
+             }
+         }
 
 
 
     StackView {
         id: stackView
-        initialItem: swipeView
+        initialItem: mainPage
         anchors.fill: parent
     }
 
 
-    SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        currentIndex: tabBar.currentIndex
+    MainPage{
+       id: mainPage
+    }
 
 
-        //Main page
-        HomePage{
+//    SwipeView {
+//        id: swipeView
+//        anchors.fill: parent
+//        currentIndex: tabBar.currentIndex
 
-        }
 
-        //Catalog
-        CatalogPage{
+//        //Main page
+//        HomePage{
 
-        }
-
-//        TabBar {
-//            anchors.bottom: parent.bottom
-//            id: tabBar
-//            currentIndex: swipeView.currentIndex
-//            TabButton {
-//                text: qsTr("Home")
-//                font.family: fixedFont.name
-//                font.pixelSize: fontSize
-//            }
-//            TabButton {
-//                Text{
-//                text: qsTr("Cadtegories")
-//                font.family: fixedFont.name
-//                font.pixelSize: fontSize
-//                }
-//            }
 //        }
-    }
+
+//        //Catalog
+//        CatalogPage{
+
+//        }
+
+////        TabBar {
+////            anchors.bottom: parent.bottom
+////            id: tabBar
+////            currentIndex: swipeView.currentIndex
+////            TabButton {
+////                text: qsTr("Home")
+////                font.family: fixedFont.name
+////                font.pixelSize: fontSize
+////            }
+////            TabButton {
+////                Text{
+////                text: qsTr("Cadtegories")
+////                font.family: fixedFont.name
+////                font.pixelSize: fontSize
+////                }
+////            }
+////        }
+//    }
 
 
 
@@ -80,37 +95,39 @@ ApplicationWindow {
 
     //header
 
-    header:Rectangle {
-        width: parent.width
-        height: 38
+//    header:Rectangle {
+//        id: header
+//        width: parent.width
+//        height: 38
 
-        Text{
-            anchors.centerIn: parent
-            text: swipeView.currentIndex==0 ? "Most viewed" : "Categories"
-            font.family: fixedFont.name
-            font.pixelSize: fontSize
-        }
+//        Text{
+//            id: headerText
+//            anchors.centerIn: parent
+//            text: swipeView.currentIndex==0 ? "Most viewed" : "Categories"
+//            font.family: fixedFont.name
+//            font.pixelSize: fontSize
+//        }
 
 
-        Rectangle{
-            anchors.left: parent.left
-            width: 50
-            height: 38
+//        Rectangle{
+//            anchors.left: parent.left
+//            width: 50
+//            height: 38
 
-            MenuBackIcon {
-                id: menuBackIcon
-                anchors.centerIn: parent
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        //menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
-                        drawer.visible = true
-                    }
-                }
-            }
-        }
+//            MenuBackIcon {
+//                id: menuBackIcon
+//                anchors.centerIn: parent
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: {
+//                        //menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
+//                        drawer.visible = true
+//                    }
+//                }
+//            }
+//        }
 
-      }
+//      }
 
 
 

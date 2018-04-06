@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>HomePage.qml</file>
+        <file>TopPage.qml</file>
         <file>MenuBackIcon.qml</file>
         <file>SidePane.qml</file>
         <file>Page3.qml</file>
@@ -23,6 +23,7 @@
         <file>fonts/11586.otf</file>
         <file>fonts/11587.ttf</file>
         <file>pics/logo2.png</file>
-        <file>mainPage.qml</file>
+        <file>MainPage.qml</file>
+        <file>Header.qml</file>
     </qresource>
 </RCC>

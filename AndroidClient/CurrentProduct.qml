@@ -1,8 +1,13 @@
 import QtQuick 2.0
 
 Item {
+
+Header{
+    text: "Current"
+}
+
 Rectangle{
-    anchors.fill: parent
+
     color: "red"
 
 }

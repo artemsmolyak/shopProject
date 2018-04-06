@@ -1,8 +1,8 @@
 import QtQuick 2.7
 
 Item {
-   id : mainPage
-   objectName: "mainPage"
+   id : topPage
+   objectName: "topPage"
 
    property var fontSize: 14
    FontLoader { id: fixedFont; name: "Drum"; source: "fonts/11613.ttf" }
