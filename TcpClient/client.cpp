@@ -26,10 +26,7 @@ Client::Client(QObject *parent): QObject(parent), blockSize(0)
      clientSocket->connectToHost(QHostAddress::LocalHost, 55555);
      connect(clientSocket, SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
 
-     qDebug() << "wait for connect....";
-     clientSocket->waitForConnected();
 
-     qDebug() << "connected";
 
 }
 
@@ -71,6 +68,21 @@ void Client::fillCatalogList()
 
      connect(this, SIGNAL(getAnswer(QVector <Catalog>)),  this, SLOT(setCatalogsModel(QVector <Catalog>)));
      sendRequest(getCatalogs);
+}
+
+bool Client::connectToServer()
+{
+    qDebug() << "wait for connect....";
+    if (clientSocket->waitForConnected(10000))
+    {
+          qDebug() << "connected";
+          return true;
+    }
+    else{
+        qDebug() << "no connect";
+        return false;
+    }
+
 }
 
 void Client::setMainProductModel(QVector<Product> products)

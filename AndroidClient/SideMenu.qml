@@ -50,7 +50,7 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                          stackView.push("MainPage.qml")
+                          stackView.pop("mainPage")
                           drawer.visible = false
                     }
                 }

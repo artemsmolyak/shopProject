@@ -20,6 +20,7 @@ Item {
         id : catalogList
         anchors.fill: parent
         model: catalogsModel
+        clip : true
 
         delegate: Rectangle{
             width: parentWidth

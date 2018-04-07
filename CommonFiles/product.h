@@ -71,4 +71,5 @@ QDataStream& operator >>(QDataStream& stream, Product& data);
 
 Q_DECLARE_METATYPE(Product)
 
+
 #endif // PRODUCT_H

@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 
     Client client;
 
+    qmlRegisterType<Product>("com.mycompany.messaging", 1, 0, "Product");
+
+
     QQmlApplicationEngine engine;
     QQmlContext * context = engine.rootContext();
     context->setContextProperty("client", &client);

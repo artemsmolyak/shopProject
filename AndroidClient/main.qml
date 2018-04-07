@@ -27,29 +27,36 @@ ApplicationWindow {
 //        }
 
 
-    //side menu
-     Drawer {
-             id: drawer
-             width: 0.7 * window.width
-             height: window.height
-
-             SideMenu{
-                 anchors.fill:parent
-             }
-         }
 
 
 
     StackView {
         id: stackView
-        initialItem: mainPage
+        initialItem: busy
         anchors.fill: parent
     }
 
 
-    MainPage{
-       id: mainPage
+    BusyIndicator {
+        id : busy
+        running: image.status === Image.Loading
+
+        Component.onCompleted: {
+            running = false;
+            if (client.connectToServer()){
+                    stackView.push( Qt.resolvedUrl("MainPage.qml"))
+            }
+            else
+                   stackView.push( Qt.resolvedUrl("noConnect.qml"))
+        }
     }
+
+
+
+
+//    MainPage{
+//       id: mainPage
+//    }
 
 
 //    SwipeView {

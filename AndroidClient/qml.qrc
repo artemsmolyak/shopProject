@@ -25,5 +25,6 @@
         <file>pics/logo2.png</file>
         <file>MainPage.qml</file>
         <file>Header.qml</file>
+        <file>noConnect.qml</file>
     </qresource>
 </RCC>

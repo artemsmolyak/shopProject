@@ -1,4 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.0
+
+
 
 Item {
    id : topPage
@@ -67,6 +69,8 @@ Item {
         id : secondList2
         anchors.fill: parent
 
+        clip : true
+
         cellWidth: parentWidth/2
         cellHeight: 160
 
@@ -100,11 +104,12 @@ Item {
                 }
             }
 
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
                      console.log("click")
-                     stackView.push( Qt.resolvedUrl("CurrentProduct.qml"))
+                     stackView.push( ["qrc:/CurrentProduct.qml",  {m_id: modelData.id, m_name: modelData.name, m_detail: modelData.detail}])
                 }
             }
 

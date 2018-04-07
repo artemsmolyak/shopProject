@@ -42,7 +42,7 @@ public:
 
     Q_INVOKABLE void fillMainList();
     Q_INVOKABLE void fillCatalogList();
-
+    Q_INVOKABLE bool connectToServer();
 
 
 

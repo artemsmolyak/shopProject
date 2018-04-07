@@ -9,6 +9,25 @@ Item {
     height: 38
 
     property alias text : headerText.text
+    property string myState: "back"
+
+
+    Component.onCompleted: {
+        menuBackIcon.state = myState
+    }
+
+
+    //side menu
+     Drawer {
+             id: drawer
+             width: 0.7 * window.width
+             height: window.height
+
+             SideMenu{
+                 anchors.fill:parent
+             }
+         }
+
 
     Text{
         id: headerText
@@ -20,6 +39,7 @@ Item {
 
 
     Rectangle{
+        id : rect
         anchors.left: parent.left
         width: 50
         height: 38
@@ -27,11 +47,15 @@ Item {
         MenuBackIcon {
             id: menuBackIcon
             anchors.centerIn: parent
+
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    //menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu"
-                    drawer.visible = true
+                    menuBackIcon.state = myState //  menuBackIcon.state === "menu" ? "back" : "menu"
+                    if (myState == "menu")
+                           drawer.visible = true
+                    else if (myState == "back")
+                           stackView.pop()
                 }
             }
         }

@@ -5,6 +5,7 @@ Item {
     width: 24
     height: 24
 
+
     Rectangle {
       color: "black"
       id: bar1
@@ -39,7 +40,9 @@ Item {
   property int animationDuration: 350
 
   state: "menu"
+
   states: [
+
     State {
       name: "menu"
     },
