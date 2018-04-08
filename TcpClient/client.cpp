@@ -135,7 +135,11 @@ void Client::setCatalogsModel(QVector<Catalog> catalogs)
     }
 
      if (qml_root_context){
+            qDebug() << "set";
             qml_root_context->setContextProperty("catalogsModel", QVariant::fromValue(catalogsModel));
+     }
+     else{
+         qDebug() << "smth wrong";
      }
 
     // disconnect(this, &Client::getAnswer, this, SLOT(setCheckedall(bool)));
